@@ -1,0 +1,4 @@
+Hello writing using fs file async
+ these is new line
+ these is new line
+ new line using async
