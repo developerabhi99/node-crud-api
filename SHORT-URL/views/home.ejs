@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            color: #222;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 15px;
+            width: 300px;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            font-weight: 600;
+        }
+
+        small {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+
+    <% if (locals.id) { %>
+        <% const generatedUrl = `http://localhost:8001/url/${locals.id}`; %>
+        <p>Short URL: <a href="<%= generatedUrl %>" target="_blank"><%= generatedUrl %></a></p>
+    <% } %>
+
+    <form method="post" action="/url">
+        <label>Enter your original URL:</label><br>
+        <input type="text" name="url" placeholder="https://example.com" required>
+        <button type="submit">Generate</button>
+    </form>
+
+    <% if (urls && urls.length > 0) { %>
+        <h3>All Shortened URLs</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Short URL</th>
+                    <th>Original URL</th>
+                    <th>Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% urls.forEach(url => { %>
+                    <tr>
+                        <td>
+                            <a href="http://localhost:8001/url/<%= url.shortId %>" target="_blank">
+                                http://localhost:8001/url/<%= url.shortId %>
+                            </a>
+                        </td>
+                        <td><small><%= url.redirectUrl %></small></td>
+                        <td><%= url.visitHistory.length %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>
