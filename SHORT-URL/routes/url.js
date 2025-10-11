@@ -3,7 +3,7 @@ const {handleGenerateNewShorlUrl,handleUrlRedirect,handleUrlAnalytics} = require
 
 const router=express.Router();
 
-router.post("/",handleGenerateNewShorlUrl)
+router.post("/",handleGenerateNewShorlUrl);
 router.get("/:id",handleUrlRedirect);
 router.get("/analytics/:id",handleUrlAnalytics);
 

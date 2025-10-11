@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>SignUp Page</h1>
+    <% if (typeof validationErr !== 'undefined' && validationErr) { %>
+        <p><%= validationErr %></p>
+      <% } %>
+      
+      <% if (typeof exists !== 'undefined' && exists) { %>
+        <p><%= exists %></p>
+      <% } %>
+    <form method="post" action="/signup">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <label>Email</label>
+        <input type="ëmail" name="email" placeholder="Enter your email" required>
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+
+        <button type="submit">SignUp</button>
+    </form>
+</body>
+</html>

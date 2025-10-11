@@ -5,6 +5,8 @@ const app = express();
 const { connectMongo } = require("./model/connection");
 const urlRoute = require("./routes/url");
 const staticRoute = require("./routes/static");
+const cookieParser = require("cookie-parser");
+const { restrictToLoggedInUser } = require("./middlewares/auth");
 
 //connection
 const mongoUrl = "mongodb://127.0.0.1:27017/short-url";
@@ -14,9 +16,10 @@ connectMongo(mongoUrl)
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
-app.use("/url", urlRoute);
+app.use("/url",restrictToLoggedInUser, urlRoute);
 app.use("/", staticRoute);
 
 app.listen(PORT, () => console.log(`Server up and running at ${PORT}`));
