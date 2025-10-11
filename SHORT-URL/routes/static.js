@@ -8,7 +8,7 @@ const { restrictToLoggedInUser } = require("../middlewares/auth");
 const router=express.Router();
 
 router.get("/",restrictToLoggedInUser,async (req,res)=>{
-    const allUser = await URL.find({createdBy:req.user._id});
+    const allUser = await URL.find({createdBy:req.user._id}); 
     res.render("home",{
         urls:allUser
     });
@@ -49,9 +49,9 @@ router.get("/login",(req,res)=>{
         return res.render("login",{"error":"Wrong email or password."});
         
     }
-    const id=uuidv4();
-    setUser(id,user);
-    res.cookie("uid",id);
+    //const id=uuidv4();
+    const token=setUser(user);
+    res.cookie("uid",token);
     return res.redirect("/");
 })
 
