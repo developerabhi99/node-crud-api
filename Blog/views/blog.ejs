@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <%- include('./partials/head') %>
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <!-- Blog Title -->
+      <h2 class="fw-bold mb-3 text-center"><%= blog.title %></h2>
+
+      <!-- Blog Image -->
+      <div class="text-center mb-4">
+        <img
+          src="<%= blog.blogImageUrl %>"
+          alt="Blog Image"
+          class="img-fluid rounded shadow"
+        />
+      </div>
+
+      <!-- Blog Content -->
+      <div class="mb-4">
+        <pre class="bg-light p-3 rounded border"><%= blog.content %></pre>
+      </div>
+
+      <!-- Author Info -->
+      <div class="d-flex align-items-center gap-3 border-top pt-3">
+        <img
+          src="<%= blog.createdBy.profileImage %>"
+          alt="Author"
+          width="80"
+          height="80"
+          class="rounded-circle border"
+        />
+        <div>
+          <p class="mb-0 fw-semibold">Created By</p>
+          <h5 class="mb-0"><%= blog.createdBy.fullname %></h5>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="container mt-5">
+      <h3 class="mb-4">Comments (<%= comments.length %>)</h3>
+
+      <% if (comments.length === 0) { %>
+      <p class="text-muted">No comments yet. Be the first to comment!</p>
+      <% } else { %> <% comments.forEach((comment) => { %>
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body d-flex align-items-start">
+          <img
+            src="<%= comment.commentedBy.profileImage %>"
+            alt="User"
+            width="60"
+            height="60"
+            class="rounded-circle me-3 border"
+          />
+          <div>
+            <h6 class="mb-1 fw-bold"><%= comment.commentedBy.fullname %></h6>
+            <p class="mb-0"><%= comment.comment %></p>
+          </div>
+        </div>
+      </div>
+      <% }) %> <% } %>
+    </div>
+
+    <!-- Comment Form -->
+    <div class="container mt-5 mb-5">
+      <% if (user) { %>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="mb-3">Add a Comment</h5>
+          <form method="post" action="/blog/comment/<%= blog._id %>">
+            <div class="mb-3">
+              <label for="comment" class="form-label">Enter your comment</label>
+              <input
+                type="text"
+                class="form-control"
+                id="comment"
+                placeholder="Write your comment here..."
+                name="comment"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+      <% } else { %>
+      <p class="text-muted">
+        Please <a href="/user/login" class="text-decoration-none">log in</a> to
+        post a comment.
+      </p>
+      <% } %>
+    </div>
+
+    <%- include('./partials/script') %>
+  </body>
+</html>
