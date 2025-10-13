@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require("path");
 const express = require("express");
 const userRoute = require("./routes/user");
@@ -9,9 +10,10 @@ const { checkAuthenticationCookies } = require("./middlewares/authentication");
 const Blog = require("./models/blog");
 
 const app = express();
-const PORT=8002;
+const PORT=process.env.PORT || 8001;
+const MONGO_URL=process.env.MONGO_URL || "mongodb://127.0.0.1:27017/blog"
 
-mongoose.connect("mongodb://127.0.0.1:27017/blog").then((e)=> console.log("Mongo DB connected !!"));
+mongoose.connect(MONGO_URL).then((e)=> console.log("Mongo DB connected !!"));
 
 // ejs template engine setup
 app.set("view engine","ejs");
