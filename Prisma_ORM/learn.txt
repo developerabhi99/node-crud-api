@@ -1,0 +1,15 @@
+PRISMA ORM
+
+Architecture
+------------
+Express -> PrismaORM ->Database
+
+install -> npm install prisma --save-dev
+
+You can now invoke the Prisma CLI by prefixing it with npx:
+
+npx prisma
+
+Next, set up your Prisma ORM project by creating your Prisma Schema file with the following command:
+
+npx prisma init --datasource-provider postgresql --output ../generated/prisma
